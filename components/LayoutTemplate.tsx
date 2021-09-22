@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Layout, Menu, Breadcrumb } from 'antd';
@@ -7,10 +7,10 @@ import data from '../utils/data'
 const { Header, Content, Footer } = Layout;
 const { Item } = Menu;
 
+type Props= { title: string; description: string;  }
 
-
-export default function LayoutTemplate( Params: { title: string; description: string; children: any; } ) {
-  const { title, description, children } = Params
+const LayoutTemplate: FC<Props> = ({ title, description, children }  ) => {
+ 
   return (
     <>
       <Head>
@@ -19,28 +19,25 @@ export default function LayoutTemplate( Params: { title: string; description: st
       </Head>
       <Layout className="layout">
         <Header>
+        <NextLink href={`/`} passHref >
           <div className="logo">
             <img className="logoImg" src={logo.src} alt="" />
           </div>
+          </NextLink>
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
             {data.flow.map((navbar, index) => {
              const key = 'NB' + index + 1;
               return (
                 <Item key={key}>
                   <NextLink href={`/${navbar.link}`} passHref >
-                    {navbar.link}
+                    {navbar.list}
                   </NextLink>
                 </Item>
               )
             })}
           </Menu>
         </Header>
-        <Content style={{ padding: '0 50px' }}>
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb> */}
+        <Content style={{ padding: '0 50px', height: 'calc(100vh - 120px)', margin: '100px' }}>
           <div className="site-layout-content">{children}</div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
@@ -50,3 +47,4 @@ export default function LayoutTemplate( Params: { title: string; description: st
     </>
   );
 }
+export default LayoutTemplate
