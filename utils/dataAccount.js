@@ -1,5 +1,3 @@
-import dataTeam from './dataTeams';
-
 const dataAccounts = {
   accounts: [
     {
