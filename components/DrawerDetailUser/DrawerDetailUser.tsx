@@ -1,6 +1,6 @@
 import { Button, Col, Divider, Drawer, Row, Space, Typography } from "antd"
 import React, { FC } from "react"
-import DescriptionItem from "./DescriptionItem";
+import DescriptionItem from "../DescriptionItem/DescriptionItem";
 
 const { Title } = Typography;
 

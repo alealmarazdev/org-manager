@@ -3,7 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import logo from '../public/images/ArkusNexus500.png';
-import data from '../utils/data'
+import data from '../../utils/data'
 const { Header, Content, Footer } = Layout;
 const { Item } = Menu;
 

@@ -4,7 +4,7 @@ import 'antd/dist/antd.css'
 import LayoutTemplate from '../components/LayoutTemplate';
 import React from 'react';
 import { Col, Divider, Row,  Typography} from 'antd';
-import DescriptionItem from '../components/DescriptionItem';
+import DescriptionItem from '../components/DescriptionItem/DescriptionItem';
 
 const { Title } = Typography;
 

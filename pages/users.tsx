@@ -3,8 +3,8 @@ import { Button, Divider, Drawer, Radio, Space, Table, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import Layout from '../components/LayoutTemplate';
-import DrawerForm from '../components/DrawerForm';
-import DrawerDetailUser from '../components/DrawerDetailUser';
+import DrawerForm from '../components/DrawerForm/DrawerForm';
+import DrawerDetailUser from '../components/DrawerDetailUser/DrawerDetailUser';
 
 import dataUsers from '../utils/dataUsers';
 
