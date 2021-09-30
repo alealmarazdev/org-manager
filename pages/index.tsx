@@ -1,16 +1,46 @@
-import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
-import 'antd/dist/antd.css'
+import type { NextPage } from 'next';
+import styles from '../styles/Home.module.css';
+import 'antd/dist/antd.css';
 import LayoutTemplate from '../components/LayoutTemplate';
 import React from 'react';
-import { Col, Divider, Row,  Typography} from 'antd';
+import { Button, Col, Divider, Row, Typography } from 'antd';
 import DescriptionItem from '../components/DescriptionItem/DescriptionItem';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 const Home: NextPage = () => {
+  const user = true;
   return (
-    <LayoutTemplate title='arkus nexus' description='Organization Manager'>
+    <LayoutTemplate title="arkus nexus" description="Organization Manager">
+      {!user && (
+        <>
+          <Row justify="center">
+            <Col>
+              <Title level={1} style={{ color: '#fd0000' }}>
+                Welcome to Arkus Nexus
+              </Title>
+            </Col>
+          </Row>
+          <Row justify="center">
+            <Col>
+              <Title level={2}> Organization Manager</Title>
+            </Col>
+          </Row>
+          <Row justify="center">
+            <Col>
+              <Button type="primary">Login</Button>
+            </Col>
+          </Row>
+          <Row justify="center">
+            <Col>
+              <Text>Please log in to continue</Text>
+            </Col>
+          </Row>
+        </>
+      )}
+      {user && (
+        <>
           <Title level={3}> User Profile</Title>
           <Divider />
           <Row>
@@ -31,7 +61,6 @@ const Home: NextPage = () => {
             </Col>
           </Row>
           <Divider />
-       
           <Row>
             <Col span={24}>
               <DescriptionItem
@@ -40,9 +69,11 @@ const Home: NextPage = () => {
               />
             </Col>
           </Row>
-          <Divider />      
-    </LayoutTemplate> 
-  )
-}
+          <Divider />
+        </>
+      )}
+    </LayoutTemplate>
+  );
+};
 
-export default Home
+export default Home;

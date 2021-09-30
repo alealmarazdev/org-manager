@@ -2,15 +2,15 @@ import { FC } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import logo from '../../public/images/ArkusNexus500.png' ;
-import data from '../../utils/data'
+import logo from '../../public/images/ArkusNexus500.png';
+import data from '../../utils/data';
 const { Header, Content, Footer } = Layout;
 const { Item } = Menu;
 
-type Props= { title: string; description: string;  }
+type Props = { title: string; description: string };
 
-const LayoutTemplate: FC<Props> = ({ title, description, children }  ) => {
- 
+const LayoutTemplate: FC<Props> = ({ title, description, children }) => {
+  const user = true;
   return (
     <>
       <Head>
@@ -19,25 +19,35 @@ const LayoutTemplate: FC<Props> = ({ title, description, children }  ) => {
       </Head>
       <Layout className="layout">
         <Header>
-        <NextLink href={`/`} passHref >
-          <div className="logo">
-            <img className="logoImg" src={logo.src} alt="" />
-          </div>
+          <NextLink href={`/`} passHref>
+            <div className="logo">
+              <img className="logoImg" src={logo.src} alt="" />
+            </div>
           </NextLink>
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-            {data.flow.map((navbar, index) => {
-             const key = 'NB' + index + 1;
-              return (
-                <Item key={key}>
-                  <NextLink href={`/${navbar.link}`} passHref >
-                    {navbar.list}
-                  </NextLink>
-                </Item>
-              )
-            })}
-          </Menu>
+          {user && (
+            <>
+              <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+                {data.flow.map((navbar, index) => {
+                  const key = 'NB' + index + 1;
+                  return (
+                    <Item key={key}>
+                      <NextLink href={`/${navbar.link}`} passHref>
+                        {navbar.list}
+                      </NextLink>
+                    </Item>
+                  );
+                })}
+              </Menu>
+            </>
+          )}
         </Header>
-        <Content style={{ padding: '0 50px', height: 'calc(100vh - 120px)', margin: '100px' }}>
+        <Content
+          style={{
+            padding: '0 50px',
+            height: 'calc(100vh - 120px)',
+            margin: '100px',
+          }}
+        >
           <div className="site-layout-content">{children}</div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
@@ -46,5 +56,5 @@ const LayoutTemplate: FC<Props> = ({ title, description, children }  ) => {
       </Layout>
     </>
   );
-}
-export default LayoutTemplate
+};
+export default LayoutTemplate;
