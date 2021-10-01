@@ -6,21 +6,28 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint", 
+    "lint": "next lint",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "antd": "^4.16.13",
+    "mongodb": "^3.7.1",
     "mongoose": "^6.0.7",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.37"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-decorators": "^7.15.4",
     "@testing-library/dom": "^8.6.0",
+    "@types/node": "^16.10.2",
     "@types/react": "17.0.22",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "jest": "^27.2.1",
