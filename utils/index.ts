@@ -1,4 +1,4 @@
-import { getConnection, createConnection } from "typeorm";
+/* import { getConnection, createConnection } from "typeorm";
 import { Profile } from "../entity/Test/profile";
 import { Photo } from "../entity/Test/photo";
 import { User } from "../entity/Test/user";
@@ -20,4 +20,4 @@ export async function getOrCreateConnection() {
       logging: false
     });
   }
-}
+} */

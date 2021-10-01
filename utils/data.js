@@ -12,6 +12,10 @@ const data = {
       list: 'Teams',
       link: 'teams',
     },
+    {
+      list: 'Logout',
+      link: 'api/auth/logout',
+    },
   ],
 };
 export default data;

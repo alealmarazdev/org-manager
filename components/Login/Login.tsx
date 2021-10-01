@@ -1,5 +1,6 @@
 import { Button, Col, Row, Typography } from 'antd';
 import React, { FC } from 'react';
+import NextLink from 'next/link';
 
 const { Text, Title } = Typography;
 
@@ -21,7 +22,9 @@ const Login: FC<Props> = () => (
     </Row>
     <Row justify="center">
       <Col>
-        <Button type="primary">Login</Button>
+        <NextLink href={`/api/auth/login`} passHref>
+          <Button type="primary">Login</Button>
+        </NextLink>
       </Col>
     </Row>
     <Row justify="center">

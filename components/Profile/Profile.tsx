@@ -1,22 +1,23 @@
+import { UserProfile } from '@auth0/nextjs-auth0';
 import { Col, Divider, Row, Typography } from 'antd';
 import React, { FC } from 'react';
 import DescriptionItem from '../DescriptionItem';
 
 const { Text, Title } = Typography;
 
-type Props = {};
+type Props = { user: UserProfile };
 
-const Profile: FC<Props> = () => (
+const Profile: FC<Props> = ({ user }) => (
   <>
     <Title level={3}> User Profile</Title>
     <Divider />
     <Row>
       <Col span={24}>
-        <DescriptionItem title="Full Name" content="Lily Potter" />
+        <DescriptionItem title="Full Name" content={`${user.name}`} />
       </Col>
       <Divider />
       <Col span={24}>
-        <DescriptionItem title="Email" content="email1@example.com" />
+        <DescriptionItem title="Email" content={`${user.email}`} />
       </Col>
       <Divider />
       <Col span={24}>
