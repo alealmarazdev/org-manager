@@ -1,21 +1,22 @@
 import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
-import { Photo } from '../Test/photo';
-import { Profile } from '../Test/profile';
+import User from '../User';
+import Account from '../Account';
 
 @Entity()
-export class User {
+export default class Team {
   @ObjectIdColumn()
   id!: ObjectID;
 
   @Column()
-  firstName!: string;
+  name!: string;
 
-  @Column()
-  lastName!: string;
+  /*   @Column((type) => Account)
+  account!: Account;
 
-  @Column((type) => Profile)
-  profile!: Profile;
+  @Column((type) => User)
+  user!: User[]; */
 
-  @Column((type) => Photo)
-  photos!: Photo[];
+  constructor(params: { name: string }) {
+    Object.assign(this, params);
+  }
 }

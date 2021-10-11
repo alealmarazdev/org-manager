@@ -1,11 +1,12 @@
-import { UserProfile } from '@auth0/nextjs-auth0';
 import { Col, Divider, Row, Typography } from 'antd';
 import React, { FC } from 'react';
+import User from '../../entity/User';
 import DescriptionItem from '../DescriptionItem';
 
 const { Text, Title } = Typography;
 
-type Props = { user: UserProfile };
+/* type Props = { user: UserProfile }; */
+type Props = { user: User };
 
 const Profile: FC<Props> = ({ user }) => (
   <>
@@ -21,20 +22,20 @@ const Profile: FC<Props> = ({ user }) => (
       </Col>
       <Divider />
       <Col span={24}>
-        <DescriptionItem title="English level" content="Middle" />
+        <DescriptionItem
+          title="English level"
+          content={`${user.english_level}`}
+        />
       </Col>
       <Divider />
       <Col span={24}>
-        <DescriptionItem title="Resume Link" content="China🇨🇳" />
+        <DescriptionItem title="Resume Link" content={`${user.resume}`} />
       </Col>
     </Row>
     <Divider />
     <Row>
       <Col span={24}>
-        <DescriptionItem
-          title="Skills"
-          content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-        />
+        <DescriptionItem title="Skills" content={`${user.skills}`} />
       </Col>
     </Row>
     <Divider />

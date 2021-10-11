@@ -1,19 +1,18 @@
 import { getConnection, createConnection } from 'typeorm';
-import { Profile } from '../entity/Test/profile';
-import { Photo } from '../entity/Test/photo';
-import { User } from '../entity/Test/user';
+import User from '../entity/User';
+import Team from '../entity/Team';
+import Account from '../entity/Account';
 
 export async function getOrCreateConnection() {
   try {
     const conn = getConnection();
     return conn;
   } catch (e) {
-    console.log(' ==== en index util');
     return createConnection({
       type: 'mongodb',
       url: process.env.MONGODB_URI as string,
       useNewUrlParser: true,
-      entities: [User, Photo, Profile],
+      entities: [User, Team, Account],
       synchronize: true,
       logging: true,
     });
