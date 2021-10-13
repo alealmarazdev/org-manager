@@ -3,7 +3,8 @@ import { Button, Divider, Radio, Table, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import Layout from '../components/LayoutTemplate';
-import dataUsers from '../utils/dataUsers';
+import { NextPage } from 'next';
+import Team from '../entity/Team';
 
 const { Title } = Typography;
 const columns = [
@@ -37,15 +38,13 @@ const columns = [
   
 ];
 
-interface DataType {
-  key: React.Key;
-  name: string;
+type Props = {
+  teams: Team[];
+};
 
-}
+const Teams: NextPage<Props> = ({teams}) => {
 
-
-export default function Teams() {
-  console.log(dataUsers.users)
+  console.log('--->', teams)
   return (
     <Layout title="teams" description="teams">
      <Title level={3}>TEAMS</Title>
@@ -53,7 +52,7 @@ export default function Teams() {
      <div>
       <Table
         columns={columns}
-        dataSource={dataUsers.users}
+        dataSource={teams}
         scroll={{ x: "max-content", y: "max-content" }}
       />
     </div>
@@ -64,3 +63,17 @@ export default function Teams() {
     </Layout>
   );
 }
+
+Teams.getInitialProps = async (): Promise<any> => {
+  let res = await fetch('http://localhost:3000/api/team');
+  const response = await res.json();
+
+  if (!response) {
+    return {
+      notFound: true,
+    };
+  }
+  return { teams: response.data };
+};
+
+export default Teams;

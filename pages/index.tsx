@@ -49,7 +49,3 @@ Home.getInitialProps = async (): Promise<any> => {
 };
 
 export default Home;
-/* 
-function email(email: any, arg1: (any: any) => any) {
-  throw new Error('Function not implemented.');
-} */

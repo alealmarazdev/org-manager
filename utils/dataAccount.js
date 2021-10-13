@@ -2,28 +2,28 @@ const dataAccounts = {
   accounts: [
     {
       key: '1',
-      account: 'Brown',
+      name: 'Brown',
       client: 'Client1',
       responsable: 'John Brown',
       team: 'rio',
     },
     {
       key: '2',
-      account: 'Green',
+      name: 'Green',
       client: 'CCCCC2',
       responsable: 'Jim Green',
       team: 'rio',
     },
     {
       key: '3',
-      account: 'Black',
+      name: 'Black',
       client: 'Client3',
       responsable: 'Joe Black',
       team: 'rio',
     },
     {
       key: '4',
-      account: 'Harper',
+      name: 'Harper',
       client: 'Client4',
       responsable: 'Joshep Harper',
       team: 'rio',

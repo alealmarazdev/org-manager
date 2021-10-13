@@ -3,9 +3,8 @@ import React, { FC } from 'react';
 import User from '../../entity/User';
 import DescriptionItem from '../DescriptionItem';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 
-/* type Props = { user: UserProfile }; */
 type Props = { user: User };
 
 const Profile: FC<Props> = ({ user }) => (

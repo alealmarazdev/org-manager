@@ -1,23 +1,30 @@
-import React, { FC, useState } from 'react';
-import { Button, Divider, Drawer, Radio, Space, Table, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, Divider, Drawer, Space, Table, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import Layout from '../components/LayoutTemplate';
 import DrawerForm from '../components/DrawerForm/DrawerForm';
 import DrawerDetailUser from '../components/DrawerDetailUser/DrawerDetailUser';
 
-import dataUsers from '../utils/dataUsers';
+import { NextPage } from 'next';
+import User from '../entity/User';
 
 const { Title } = Typography;
 
-interface DataType {
+/* interface DataType {
   key: React.Key;
   name: string;
   email: string;
   password: string;
 }
 
-const Users: FC = () => {
+const Users: FC = () => { */
+  type Props = {
+    users: User[];
+  };
+  
+
+const Users: NextPage<Props> = ({users}) => {
   const [visible, setVisible] = useState(false)
   const [userDetail, setUserDetail] = useState(false)
 
@@ -81,7 +88,7 @@ const Users: FC = () => {
      <div>
       <Table
         columns={columns}
-        dataSource={dataUsers.users}
+        dataSource={users}
         scroll={{ x: "max-content", y: "max-content" }}
       />
     </div>
@@ -114,6 +121,16 @@ const Users: FC = () => {
     </Layout>
   );
 }
+Users.getInitialProps = async (): Promise<any> => {
+  let res = await fetch('http://localhost:3000/api/user');
+  const response = await res.json();
 
+  if (!response) {
+    return {
+      notFound: true,
+    };
+  }
+  return { users: response.data };
+};
 
 export default Users
