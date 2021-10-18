@@ -8,7 +8,7 @@ type Props = {
 
 }
 
-const DrawerDetailUser: FC<Props> = () => {
+const DrawerDetailAccount: FC<Props> = () => {
     
     return (
 
@@ -44,4 +44,4 @@ const DrawerDetailUser: FC<Props> = () => {
     );
 };
 
-export default DrawerDetailUser
+export default DrawerDetailAccount

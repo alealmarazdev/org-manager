@@ -42,7 +42,6 @@ const DrawerForm: FC<Props> = () => {
       console.log(response)
     }
     handleUserCreated()
-    console.log(values);
   }
 
 
@@ -71,7 +70,7 @@ const DrawerForm: FC<Props> = () => {
             <Input placeholder="Please enter user name" />
           </Form.Item>
         </Col>
-        {/* <Col span={12}>
+        <Col span={12}>
           <Form.Item
             name="email"
             label="Email"
@@ -79,14 +78,14 @@ const DrawerForm: FC<Props> = () => {
           >
             <Input
               style={{ width: '100%' }}
-              /* addonBefore="http://"
-              addonAfter=".com" */
-              /*placeholder="Please enter email"
+            /* addonBefore="http://"
+            addonAfter=".com" */
+            /*placeholder="Please enter email"*/
             />
           </Form.Item>
-        </Col> */}
+        </Col>
       </Row>
-      {/*< Row gutter={16}>
+      < Row gutter={16}>
         <Col span={12}>
           <Form.Item
             name="account"
@@ -99,7 +98,7 @@ const DrawerForm: FC<Props> = () => {
             </Select>
           </Form.Item>
         </Col>
-        <Col span={12}>
+        {/* <Col span={12}>
           <Form.Item
             name="dateTime"
             label="DateTime"
@@ -110,10 +109,10 @@ const DrawerForm: FC<Props> = () => {
               // getPopupContainer={trigger => trigger.parentElement}
             />
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
       <Row gutter={16}>
-      <Col span={12}>
+        <Col span={12}>
           <Form.Item
             name="english"
             label="English level"
@@ -136,12 +135,12 @@ const DrawerForm: FC<Props> = () => {
             <Input
               style={{ width: '100%' }}
               addonBefore="https://docs.google.com/document/"
-              /* addonAfter=".com" */
-            /*  placeholder="Please enter email"
+            /* addonAfter=".com" */
+            /*  placeholder="Please enter email"*/
             />
           </Form.Item>
         </Col>
-       
+
       </Row>
       <Row gutter={16}>
         <Col span={24}>
@@ -158,8 +157,8 @@ const DrawerForm: FC<Props> = () => {
             <Input.TextArea rows={4} placeholder="please enter skills description" />
           </Form.Item>
         </Col>
-      
-      </Row> */}
+
+      </Row>
 
       <Row gutter={16}>
         <Col span={24}>

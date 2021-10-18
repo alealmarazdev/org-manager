@@ -30,11 +30,11 @@ type Props = {
 
 }
 
-const DrawerFormAccount: FC<Props> =() => {
+const DrawerFormTeam: FC<Props> = () => {
 
   const onFinish = (values: any) => {
     const handleAccountCreated = async () => {
-      let res = await fetch('http://localhost:3000/api/account', {
+      let res = await fetch('http://localhost:3000/api/team', {
         method: 'POST',
         body: JSON.stringify(values)
       })
@@ -54,48 +54,15 @@ const DrawerFormAccount: FC<Props> =() => {
         <Col span={12}>
           <Form.Item
             name="name"
-            label="Account"
+            label="Team"
             rules={[{ required: true, message: 'Please enter account name' }]}
           >
             <Input placeholder="Please enter account name" />
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item
-            name="client"
-            label="Client"
-            rules={[{ required: true, message: 'Please enter client name' }]}
-          >
-            <Input
-              style={{ width: '100%' }}
-              placeholder="Please enter client name"
-            />
-          </Form.Item>
-        </Col>
+
       </Row>
-      <Row gutter={16}>
-      <Col span={12}>
-          <Form.Item
-            name="responsable"
-            label="Responsable name"
-            rules={[{ required: true, message: 'Please enter responsable name' }]}
-          >
-            <Input placeholder="Please enter responsable name" />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            name="team"
-            label="Team"
-            rules={[{ required: true, message: 'Please choose the asign team' }]}
-          >
-            <Select placeholder="Please choose the team">
-              <Option value="a">a</Option>
-              <Option value="b">b</Option>
-            </Select>
-          </Form.Item>
-        </Col>
-      </Row>
+
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item wrapperCol={{ span: 24 }}>
@@ -110,4 +77,4 @@ const DrawerFormAccount: FC<Props> =() => {
   );
 };
 
-export default DrawerFormAccount
+export default DrawerFormTeam

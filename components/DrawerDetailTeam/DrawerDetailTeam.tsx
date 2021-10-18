@@ -18,6 +18,7 @@ type Props = {
   }
 
 const DrawerDetailTeam: FC<Props> =() => {
+  
     return (
       
           <>

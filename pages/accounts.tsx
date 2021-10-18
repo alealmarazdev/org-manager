@@ -4,7 +4,7 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import Layout from '../components/LayoutTemplate';
 import DrawerFormAccount from '../components/DrawerFormAccount/DrawerFormAccount';
-import DrawerDetailUser from '../components/DrawerDetailUser/DrawerDetailUser';
+import DrawerDetailAccount from '../components/DrawerDetailAccount';
 
 import { NextPage } from 'next';
 import Account from '../entity/Account';
@@ -17,7 +17,7 @@ type Props = {
 
 const Accounts: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false);
-  const [teamDetail, setTeamDetail] = useState(false);
+  const [accountDetail, setAccountDetail] = useState(false);
   const [accounts, setAccountsState] = useState<Account[]>([])
 
   useEffect(
@@ -36,35 +36,29 @@ const Accounts: NextPage<Props> = () => {
       handleAccount()
     }, [])
 
-  console.log('-->', accounts)
+  const dataSource = accounts.map((account) => ({ ...account, key: account.id.toString() }))
 
   const handleState = () => {
-    setTeamDetail(true);
+    setAccountDetail(true);
     setVisible(!visible);
-    console.log(teamDetail);
   };
 
-  const showDrawer = () => {
-    setTeamDetail(false);
+  const showDrawerForm = () => {
+    setAccountDetail(false);
     setVisible(!visible);
   };
 
   const handleEdit = (key: React.Key) => {
-    setTeamDetail(false);
+    setAccountDetail(false);
     setVisible(!visible);
     console.log('edit' + key);
   };
-  /*   const handleDelete = (e: any) => {
-      console.log('delete' + e);
-    }; */
-
-  const dataSource = accounts.map((account) => ({ ...account, key: account.id.toString() }))
 
   const handleDelete = (key: React.Key) => {
     const data = [...dataSource];
     /* this.setState({ dataSource: data.filter(item => item.key !== key) }); */
     const handleAccountDelete = async () => {
-      let res = await fetch('http://localhost:3000/api/account/:key', {
+      let res = await fetch(`http://localhost:3000/api/account/${key}`, {
         method: 'DELETE',
         body: JSON.stringify(key)
       })
@@ -73,12 +67,11 @@ const Accounts: NextPage<Props> = () => {
       console.log(response)
     }
     handleAccountDelete()
-    console.log(key);
   };
 
   const columns = [
     {
-      title: 'Account',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name'
     },
@@ -111,7 +104,7 @@ const Accounts: NextPage<Props> = () => {
         <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
           <EditOutlined />
         </Popconfirm>
-      /* ) : null, */      
+      /* ) : null, */
       /* render: () => (
         <Button onClick={handleEdit} type="text">
           <EditOutlined />
@@ -148,11 +141,11 @@ const Accounts: NextPage<Props> = () => {
         />
       </div>
 
-      <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+      <Button type="primary" onClick={showDrawerForm} icon={<PlusOutlined />}>
         Add a new acccount
       </Button>
       <Drawer
-        title={teamDetail ? 'Team Members' : `Create a new account `}
+        title={accountDetail ? 'Account Members' : `Create a new account `}
         width={720}
         onClose={handleState}
         visible={visible}
@@ -167,23 +160,11 @@ const Accounts: NextPage<Props> = () => {
           </Space>
         }
       >
-        {!teamDetail && <DrawerFormAccount />}
-        {teamDetail && <DrawerDetailUser />}
+        {!accountDetail && <DrawerFormAccount />}
+        {accountDetail && <DrawerDetailAccount />}
       </Drawer>
     </Layout>
   );
 };
-
-/* Accounts.getInitialProps = async (): Promise<any> => {
-  let res = await fetch('http://localhost:3000/api/account');
-  const response = await res.json();
-
-  if (!response) {
-    return {
-      notFound: true,
-    };
-  }
-  return { accounts: response.data };
-}; */
 
 export default Accounts;
