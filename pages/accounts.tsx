@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Divider, Drawer, Space, Table, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Divider, Drawer, Popconfirm, Space, Table, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
 import Layout from '../components/LayoutTemplate';
@@ -15,9 +15,26 @@ type Props = {
   accounts: Account[];
 };
 
-const Accounts: NextPage<Props> = ({accounts}) => {
+const Accounts: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false);
   const [teamDetail, setTeamDetail] = useState(false);
+  const [accounts, setAccountsState] = useState<Account[]>([])
+
+  useEffect(
+    () => {
+      const handleAccount = async () => {
+        let res = await fetch('http://localhost:3000/api/account');
+        const response = await res.json();
+
+        if (!response) {
+          return {
+            notFound: true,
+          };
+        }
+        return setAccountsState(response.data);
+      }
+      handleAccount()
+    }, [])
 
   console.log('-->', accounts)
 
@@ -32,27 +49,48 @@ const Accounts: NextPage<Props> = ({accounts}) => {
     setVisible(!visible);
   };
 
-  const handleEdit = (e: any) => {
+  const handleEdit = (key: React.Key) => {
     setTeamDetail(false);
     setVisible(!visible);
-    console.log('edit' + e);
+    console.log('edit' + key);
   };
-  const handleDelete = (e: any) => {
-    console.log('delete' + e);
+  /*   const handleDelete = (e: any) => {
+      console.log('delete' + e);
+    }; */
+
+  const dataSource = accounts.map((account) => ({ ...account, key: account.id.toString() }))
+
+  const handleDelete = (key: React.Key) => {
+    const data = [...dataSource];
+    /* this.setState({ dataSource: data.filter(item => item.key !== key) }); */
+    const handleAccountDelete = async () => {
+      let res = await fetch('http://localhost:3000/api/account/:key', {
+        method: 'DELETE',
+        body: JSON.stringify(key)
+      })
+
+      const response = await res.json()
+      console.log(response)
+    }
+    handleAccountDelete()
+    console.log(key);
   };
 
   const columns = [
     {
       title: 'Account',
       dataIndex: 'name',
+      key: 'name'
     },
     {
       title: 'Client',
       dataIndex: 'client',
+      key: 'client',
     },
     {
       title: 'Responsable',
       dataIndex: 'responsable',
+      key: 'responsable',
     },
     {
       title: 'Team',
@@ -62,24 +100,39 @@ const Accounts: NextPage<Props> = ({accounts}) => {
           {text}
         </Button>
       ),
+      key: 'button',
     },
     {
       title: () => <EditOutlined />,
       dataIndex: 'edit',
-      render: () => (
+      key: 'edit',
+      render: (_: any, record: { key: React.Key }) =>
+        /*  dataSource.length >= 1 ? ( */
+        <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
+          <EditOutlined />
+        </Popconfirm>
+      /* ) : null, */      
+      /* render: () => (
         <Button onClick={handleEdit} type="text">
           <EditOutlined />
         </Button>
-      ),
+      ), */
     },
     {
       title: () => <DeleteOutlined />,
       dataIndex: 'delete',
-      render: () => (
+      key: 'delete',
+      render: (_: any, record: { key: React.Key }) =>
+        /*   dataSource.length >= 1 ? ( */
+        <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+          <DeleteOutlined />
+        </Popconfirm>
+      /*   ) : null, */  /* render: () => (
         <Button onClick={handleDelete} type="text">
           <DeleteOutlined />
         </Button>
-      ),
+      ), */
+
     },
   ];
 
@@ -90,7 +143,7 @@ const Accounts: NextPage<Props> = ({accounts}) => {
       <div>
         <Table
           columns={columns}
-          dataSource={accounts}
+          dataSource={dataSource}
           scroll={{ x: 'max-content', y: 'max-content' }}
         />
       </div>
@@ -121,7 +174,7 @@ const Accounts: NextPage<Props> = ({accounts}) => {
   );
 };
 
-Accounts.getInitialProps = async (): Promise<any> => {
+/* Accounts.getInitialProps = async (): Promise<any> => {
   let res = await fetch('http://localhost:3000/api/account');
   const response = await res.json();
 
@@ -131,6 +184,6 @@ Accounts.getInitialProps = async (): Promise<any> => {
     };
   }
   return { accounts: response.data };
-};
+}; */
 
 export default Accounts;

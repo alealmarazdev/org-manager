@@ -4,7 +4,7 @@ import { Form, Input, InputNumber, Button, Typography, Drawer, Space, Row, Col, 
 
 const { Option } = Select;
 
-
+/* 
 const layout = {
   labelCol: {
     span: 8,
@@ -12,7 +12,7 @@ const layout = {
   wrapperCol: {
     span: 16,
   },
-};
+}; */
 /* eslint-disable no-template-curly-in-string */
 
 const validateMessages = {
@@ -31,13 +31,25 @@ type Props = {
 }
 
 const DrawerFormAccount: FC<Props> =() => {
+
   const onFinish = (values: any) => {
+    const handleAccountCreated = async () => {
+      let res = await fetch('http://localhost:3000/api/account', {
+        method: 'POST',
+        body: JSON.stringify(values)
+      })
+
+      const response = await res.json()
+      console.log(response)
+    }
+    handleAccountCreated()
     console.log(values);
   }
 
+
   return (
 
-    <Form layout="vertical" hideRequiredMark>
+    <Form layout="vertical" hideRequiredMark onFinish={onFinish}>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Divider, Drawer, Space, Table, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -23,10 +23,26 @@ const Users: FC = () => { */
     users: User[];
   };
   
-
-const Users: NextPage<Props> = ({users}) => {
+const Users: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false)
   const [userDetail, setUserDetail] = useState(false)
+  const [users, setUsersState] = useState<User[]>([])
+
+  useEffect(
+    () => {
+      const handleUser = async () => {
+        let res = await fetch('http://localhost:3000/api/user');
+        const response = await res.json();
+
+        if (!response) {
+          return {
+            notFound: true,
+          };
+        }
+        return setUsersState(response.data);
+      }
+      handleUser()
+    }, [])
 
   const handleState = () => {
     setUserDetail(true)
@@ -48,34 +64,39 @@ const Users: NextPage<Props> = ({users}) => {
   const handleDelete = (e: any) => {
     console.log('delete' + e)
   }
-
+ const dataSource = users.map((user)=> ({...user, key:user.id}))
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       render: (text: string) => <Button onClick={handleState} type="link">{text}</Button>,
+      key: 'name'
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      key: 'email'
       
     },
     {
       title: 'Password',
       dataIndex: 'password',
+      key:' password'
      
     },
     {
       title: () => <EditOutlined />,
       dataIndex: 'edit',
       render : () => <Button onClick={handleEdit} type="text" ><EditOutlined /></Button>,
+      key:'edit'
   
     },
     {
       title: () => <DeleteOutlined />,
       dataIndex: 'delete',
       render : () => <Button onClick={handleDelete} type="text"><DeleteOutlined /></Button>,
+      key:'delete'
    
     },
     
@@ -88,7 +109,7 @@ const Users: NextPage<Props> = ({users}) => {
      <div>
       <Table
         columns={columns}
-        dataSource={users}
+        dataSource={dataSource}
         scroll={{ x: "max-content", y: "max-content" }}
       />
     </div>
@@ -121,7 +142,7 @@ const Users: NextPage<Props> = ({users}) => {
     </Layout>
   );
 }
-Users.getInitialProps = async (): Promise<any> => {
+/* Users.getInitialProps = async (): Promise<any> => {
   let res = await fetch('http://localhost:3000/api/user');
   const response = await res.json();
 
@@ -131,6 +152,6 @@ Users.getInitialProps = async (): Promise<any> => {
     };
   }
   return { users: response.data };
-};
+}; */
 
 export default Users

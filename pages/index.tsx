@@ -1,8 +1,9 @@
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import styles from '../styles/Home.module.css';
 import 'antd/dist/antd.css';
 import LayoutTemplate from '../components/LayoutTemplate';
-import React from 'react';
+
 import fetch from 'isomorphic-unfetch';
 
 import Login from '../components/Login';
@@ -14,10 +15,27 @@ type Props = {
   users: User[];
 };
 
-const Home: NextPage<Props> = ({ users }) => {
+const Home: NextPage<Props> = () => {
   const { user, error, isLoading } = useUser();
+  const [usersState, setUsersState] = useState([])
 
-  const userSelected = users.find((u: any) => u.email == user?.email);
+  useEffect(
+    () => {
+      const handleUser = async () => {
+        let res = await fetch('http://localhost:3000/api/user');
+        const response = await res.json();
+
+        if (!response) {
+          return {
+            notFound: true,
+          };
+        }
+        return setUsersState(response.data);
+      }
+      handleUser()
+    }, [])
+
+  const userSelected = usersState.find((u: any) => u.email == user?.email);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -34,18 +52,6 @@ const Home: NextPage<Props> = ({ users }) => {
       <Login />
     </LayoutTemplate>
   );
-};
-
-Home.getInitialProps = async (): Promise<any> => {
-  let res = await fetch('http://localhost:3000/api/user');
-  const response = await res.json();
-
-  if (!response) {
-    return {
-      notFound: true,
-    };
-  }
-  return { users: response.data };
 };
 
 export default Home;

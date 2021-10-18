@@ -3,7 +3,7 @@ import { Form, Input, InputNumber, Button, Typography, Drawer, Space, Row, Col, 
 
 const { Option } = Select;
 
-
+/* 
 const layout = {
   labelCol: {
     span: 8,
@@ -11,7 +11,7 @@ const layout = {
   wrapperCol: {
     span: 16,
   },
-};
+}; */
 /* eslint-disable no-template-curly-in-string */
 
 const validateMessages = {
@@ -26,17 +26,41 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 type Props = {
-  
+
 }
 
-const DrawerForm: FC<Props> =() => {
+const DrawerForm: FC<Props> = () => {
+
   const onFinish = (values: any) => {
+    const handleUserCreated = async () => {
+      let res = await fetch('http://localhost:3000/api/user', {
+        method: 'POST',
+        body: JSON.stringify(values)
+      })
+
+      const response = await res.json()
+      console.log(response)
+    }
+    handleUserCreated()
     console.log(values);
   }
 
+
+  /* {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ hungry: true })
+  }).then( r => {
+    open(r.headers.get('location'));
+    return r.json();
+  }) */
+
+
   return (
-   
-    <Form layout="vertical" hideRequiredMark>
+
+    <Form layout="vertical" hideRequiredMark onFinish={onFinish}>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
@@ -47,7 +71,7 @@ const DrawerForm: FC<Props> =() => {
             <Input placeholder="Please enter user name" />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        {/* <Col span={12}>
           <Form.Item
             name="email"
             label="Email"
@@ -57,12 +81,12 @@ const DrawerForm: FC<Props> =() => {
               style={{ width: '100%' }}
               /* addonBefore="http://"
               addonAfter=".com" */
-              placeholder="Please enter email"
+              /*placeholder="Please enter email"
             />
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
-      <Row gutter={16}>
+      {/*< Row gutter={16}>
         <Col span={12}>
           <Form.Item
             name="account"
@@ -113,7 +137,7 @@ const DrawerForm: FC<Props> =() => {
               style={{ width: '100%' }}
               addonBefore="https://docs.google.com/document/"
               /* addonAfter=".com" */
-              placeholder="Please enter email"
+            /*  placeholder="Please enter email"
             />
           </Form.Item>
         </Col>
@@ -135,16 +159,16 @@ const DrawerForm: FC<Props> =() => {
           </Form.Item>
         </Col>
       
-      </Row>
-     
-       <Row gutter={16}>
+      </Row> */}
+
+      <Row gutter={16}>
         <Col span={24}>
-        <Form.Item wrapperCol={{  span: 24 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-      </Col>
+          <Form.Item wrapperCol={{ span: 24 }}>
+            <Button type="primary" htmlType="submit" >
+              Submit
+            </Button>
+          </Form.Item>
+        </Col>
       </Row>
     </Form>
 
