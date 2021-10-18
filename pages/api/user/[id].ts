@@ -1,18 +1,18 @@
 import { getMongoRepository } from 'typeorm';
-import User from '../../../entity/User';
-import Team from '../../../entity/Team';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getOrCreateConnection } from '../../../utils';
+import User from '../../../entity/User';
 
 type Data = {
-  data: any;
+  data: User | string;
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const conn = await getOrCreateConnection();
+  await getOrCreateConnection();
+
   const {
     query: { id },
     method,
@@ -24,26 +24,28 @@ export default async function handler(
 
   switch (method) {
     case 'GET':
-      // Get data from your database
-      res.status(200).json({ data: id });
-      break;
+      if (!user) {
+        return res.status(404).json({ data: 'no found' });
+      }
+
+      return res.status(200).json({ data: user });
+
     case 'PUT':
       // Update  data in your database
-      if (user) {
-        for (const key of Object.keys(body as Partial<User>)) {
-          //@ts-ignore
-          user[key] = body[key];
-        }
-        await userRepository.update(id, user!);
-        return res.status(200).json({ data: user });
+      if (!user) {
+        return res.status(404).json({ data: 'Not found' });
       }
-      res.status(404).json({ data: 'no found' });
-      break;
+
+      const updatedUser = Object.assign({}, user, body)
+
+      await userRepository.update(id, updatedUser);
+      return res.status(200).json({ data: updatedUser });
+
     case 'DELETE':
       // Delete data in your database
       await userRepository.delete(id);
-      res.status(200).json({ data: id });
-      break;
+      return res.status(200).json({ data: id as string });
+
     default:
       res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);

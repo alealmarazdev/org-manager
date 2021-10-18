@@ -1,5 +1,5 @@
 import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
-import Team from '../Team';
+import Team from './Team';
 
 @Entity()
 export default class User {

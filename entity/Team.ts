@@ -1,6 +1,6 @@
 import { Entity, ObjectID, ObjectIdColumn, Column } from 'typeorm';
-import User from '../User';
-import Account from '../Account';
+import User from './User';
+import Account from './Account';
 
 @Entity()
 export default class Team {
