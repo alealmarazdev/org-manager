@@ -36,8 +36,8 @@ export default async function handler(
       if (!account) {
         return res.status(404).json({ data: 'Not found' });
       }
-      const content = JSON.parse(body)
-      const updatedAccount = Object.assign({}, account, content)
+      /* const content = JSON.parse(body) */
+      const updatedAccount = Object.assign({}, account, body)
 
       await accountRepository.update(id, updatedAccount);
       return res.status(200).json({ data: updatedAccount });

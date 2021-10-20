@@ -48,6 +48,9 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
     const handleUserUpdate = async () => {
       let res = await fetch(`http://localhost:3000/api/user/${id}`, {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(values)
       })
 

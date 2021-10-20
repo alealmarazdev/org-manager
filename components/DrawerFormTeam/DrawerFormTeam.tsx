@@ -35,7 +35,11 @@ const DrawerFormTeam: FC<Props> = () => {
   const onFinish = (values: any) => {
     const handleTeamCreated = async () => {
       let res = await fetch('http://localhost:3000/api/team', {
+        //header application JSON
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(values)
       })
 

@@ -16,7 +16,7 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 type Props = {
-  
+
 }
 
 const DrawerForm: FC<Props> = () => {
@@ -25,6 +25,9 @@ const DrawerForm: FC<Props> = () => {
     const handleUser = async () => {
       let res = await fetch('http://localhost:3000/api/user', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(values)
       })
 
@@ -49,7 +52,7 @@ const DrawerForm: FC<Props> = () => {
 
   return (
 
-    <Form layout="vertical"  hideRequiredMark onFinish={onFinish}>
+    <Form layout="vertical" hideRequiredMark onFinish={onFinish}>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item

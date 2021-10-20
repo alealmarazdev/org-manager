@@ -49,6 +49,9 @@ const DrawerFormAccountUpdate: FC<Props> = ({ id }) => {
     const handleAccountUpdate = async () => {
       let res = await fetch(`http://localhost:3000/api/account/${id}`, {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(values)
       })
 

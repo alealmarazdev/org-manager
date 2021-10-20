@@ -29,8 +29,8 @@ export default async function handler(
       break;
     case 'POST':
       // Create data in your database
-      const content = JSON.parse(body)
-      const newAccount = new Account(content);
+     /*  const content = JSON.parse(body) */
+      const newAccount = new Account(body);
       accountRepository.save(newAccount);
       res.status(200).json({ data: newAccount });
       break;

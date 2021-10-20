@@ -5,16 +5,16 @@ import Account from './Account';
 @Entity()
 export default class Team {
   @ObjectIdColumn()
-  id!: ObjectID;
+  _id!: ObjectID;
 
   @Column()
   name!: string;
 
-  /*   @Column((type) => Account)
+  /*@Column((type) => Account)
   account!: Account;
 
   @Column((type) => User)
-  user!: User[]; */
+  user!: User[];    */
 
   constructor(params: { name: string }) {
     Object.assign(this, params);

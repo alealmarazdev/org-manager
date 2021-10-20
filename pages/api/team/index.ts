@@ -2,6 +2,7 @@ import { getMongoManager, getMongoRepository } from 'typeorm';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getOrCreateConnection } from '../../../utils';
 import Team from '../../../entity/Team';
+import Account from '../../../entity/Account';
 
 type Data = {
   data: any;
@@ -17,21 +18,38 @@ export default async function handler(
     method,
     body,
   } = req;
-  const userRepository = getMongoRepository(Team);
-  const data = await userRepository.find();
+
+  const teamRepository = getMongoRepository(Team);
+  const accountRepository = getMongoRepository(Account)
 
   switch (method) {
     case 'GET':
       // Get data from your database
+      const data = await teamRepository.find();
       res.status(200).json({ data });
       break;
+
     case 'POST':
       // Create data in your database
-      const content = JSON.parse(body)
-      const newTeam = new Team(content);
-      userRepository.save(newTeam);
+      console.log('.....', body)
+      const account = await accountRepository.findOne(body.accountId as string)
+      console.log('--->>>>', account)
+      if(!account) {
+         res.status(400).json({ data: 'Not account id found' })
+         return
+      }
+
+   /*    const content = JSON.parse(body) */
+      const newTeam = new Team(body);
+      await teamRepository.save(newTeam);
+
+     const teamsIds = account.teams.map((team) => team._id)
+      account.teams= [...account.teams, newTeam]
+      await accountRepository.update(body.accountId, account)
+
       res.status(200).json({ data: newTeam });
       break;
+
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
