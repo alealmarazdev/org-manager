@@ -33,6 +33,7 @@ const Users: NextPage<Props> = () => {
     }
     return setUsersState(response.data);
   }
+
   useEffect(
     () => {
       handleUser()
@@ -93,9 +94,9 @@ const Users: NextPage<Props> = () => {
       key: 'email'
     },
     {
-      title: 'Password',
-      dataIndex: 'password',
-      key: ' password'
+      title: 'English level',
+      dataIndex: 'english_level',
+      key: ' english_level'
     },
     {
       title: () => <EditOutlined />,

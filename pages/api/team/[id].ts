@@ -35,8 +35,8 @@ export default async function handler(
       if (!team) {
         return res.status(404).json({ data: 'Not found' });
       }
-      const content = JSON.parse(body)
-      const updatedTeam = Object.assign({}, team, content)
+     /*  const content = JSON.parse(body) */
+      const updatedTeam = Object.assign({}, team, body)
 
       await teamRepository.update(id, updatedTeam);
       return res.status(200).json({ data: updatedTeam });

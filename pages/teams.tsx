@@ -20,29 +20,31 @@ const Teams: NextPage<Props> = () => {
   const [teamDetail, setTeamDetail] = useState(false)
   const [teams, setTeamsState] = useState<Team[]>([])
   const [teamId, setTeamIdState] = useState<string | undefined>()
+  
+  const handleTeam = async () => {
+    let res = await fetch('http://localhost:3000/api/team');
+    const response = await res.json();
+
+    if (!response) {
+      return {
+        notFound: true,
+      };
+    }
+    return setTeamsState(response.data);
+  }
 
   useEffect(
     () => {
-      const handleTeam = async () => {
-        let res = await fetch('http://localhost:3000/api/team');
-        const response = await res.json();
-
-        if (!response) {
-          return {
-            notFound: true,
-          };
-        }
-        return setTeamsState(response.data);
-      }
       handleTeam()
     }, [])
 
-  const dataSource = teams.map((team) => ({ ...team, key: team.id.toString() }))
+  const dataSource = teams.map((team) => ({ ...team, key: team._id.toString() }))
 
   const handleState = () => {
     setTeamDetail(true)
     setVisible(!visible)
     setTeamIdState(undefined)
+    handleTeam()
   }
 
   const handleAccountDetail = (key: string) => {
@@ -132,17 +134,17 @@ const Teams: NextPage<Props> = () => {
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
         /* @ts-ignore */
-        extra={
+        /* extra={
           <Space>
             <Button onClick={handleState}>Cancel</Button>
             <Button onClick={handleState} type="primary">
               Submit
             </Button>
           </Space>
-        }
+        } */
       >
         {teamDetail && teamId && <DrawerDetailTeam id={teamId} />}
-        {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId}/>}
+        {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId} onSubmit={handleState}/>}
         {!teamDetail && !teamId && <DrawerFormTeam />}
       </Drawer>
     </Layout>

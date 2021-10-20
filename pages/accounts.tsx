@@ -22,28 +22,31 @@ const Accounts: NextPage<Props> = () => {
   const [accounts, setAccountsState] = useState<Account[]>([])
   const [accountId, setAccountIdState] = useState<string | undefined>()
 
+  const handleAccount = async () => {
+    let res = await fetch('http://localhost:3000/api/account');
+    const response = await res.json();
+
+    if (!response) {
+      return {
+        notFound: true,
+      };
+    }
+    return setAccountsState(response.data);
+  }
+
   useEffect(
     () => {
-      const handleAccount = async () => {
-        let res = await fetch('http://localhost:3000/api/account');
-        const response = await res.json();
 
-        if (!response) {
-          return {
-            notFound: true,
-          };
-        }
-        return setAccountsState(response.data);
-      }
       handleAccount()
     }, [])
 
-  const dataSource = accounts.map((account) => ({ ...account, key: account.id.toString() }))
+  const dataSource = accounts.map((account) => ({ ...account, key: account._id.toString() }))
 
   const handleState = () => {
     setAccountDetail(true);
     setVisible(!visible);
     setAccountIdState(undefined)
+    handleAccount()
   };
 
   const handleAccountDetail = (key: string) => {
@@ -157,17 +160,17 @@ const Accounts: NextPage<Props> = () => {
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
         /* @ts-ignore */
-        extra={
+        /* extra={
           <Space>
             <Button onClick={handleState}>Cancel</Button>
             <Button onClick={handleState} type="primary">
               Submit
             </Button>
           </Space>
-        }
+        } */
       >
-        {accountDetail && accountId && <DrawerDetailAccount id={accountId}/>}
-        {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId}/>}
+        {accountDetail && accountId && <DrawerDetailAccount id={accountId} />}
+        {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId} onSubmit={handleState}/>}
         {!accountDetail && !accountId && <DrawerFormAccount />}
       </Drawer>
     </Layout>

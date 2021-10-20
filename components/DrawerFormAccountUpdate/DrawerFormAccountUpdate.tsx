@@ -16,10 +16,11 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 type Props = {
-  id: string | undefined
+  id: string | undefined;
+  onSubmit: ()=>void;
 }
 
-const DrawerFormAccountUpdate: FC<Props> = ({ id }) => {
+const DrawerFormAccountUpdate: FC<Props> = ({ id, onSubmit }) => {
   const [account, setAccountState] = useState<Account>({})
   const [form] = Form.useForm()
   console.log('====>', id)
@@ -57,6 +58,7 @@ const DrawerFormAccountUpdate: FC<Props> = ({ id }) => {
 
       const response = await res.json()
       console.log(response)
+      onSubmit() 
     }
     handleAccountUpdate()  /*  */
   }
