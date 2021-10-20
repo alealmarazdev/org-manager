@@ -25,24 +25,27 @@ export default async function handler(
   switch (method) {
     case 'GET':
       // Get data from your database
-      res.status(200).json({ data: id });
-      break;
+      if (!account) {
+        return res.status(404).json({ data: 'no found' });
+      }
+
+      return res.status(200).json({ data: account });
+      
     case 'PUT':
       // Update or create data in your database
-      if (account) {
-        for (const key of Object.keys(body as Partial<Account>)) {
-          //@ts-ignore
-          account[key] = body[key];
-        }
-        await accountRepository.update(id, account!);
-        return res.status(200).json({ data: account });
+      if (!account) {
+        return res.status(404).json({ data: 'Not found' });
       }
-      res.status(404).json({ data: 'no found' });
-      break;
+      const content = JSON.parse(body)
+      const updatedAccount = Object.assign({}, account, content)
+
+      await accountRepository.update(id, updatedAccount);
+      return res.status(200).json({ data: updatedAccount });
+
     case 'DELETE':
       // Delete data in your database
       await accountRepository.delete(id);
-      res.status(200).json({ data: id });
+      res.status(200).json({ data: id as string });
       break;
     default:
       res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);

@@ -4,15 +4,6 @@ import { Form, Input, InputNumber, Button, Typography, Drawer, Space, Row, Col, 
 
 const { Option } = Select;
 
-/* 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-}; */
 /* eslint-disable no-template-curly-in-string */
 
 const validateMessages = {
@@ -43,9 +34,7 @@ const DrawerFormAccount: FC<Props> =() => {
       console.log(response)
     }
     handleAccountCreated()
-    console.log(values);
   }
-
 
   return (
 

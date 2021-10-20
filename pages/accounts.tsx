@@ -8,6 +8,7 @@ import DrawerDetailAccount from '../components/DrawerDetailAccount';
 
 import { NextPage } from 'next';
 import Account from '../entity/Account';
+import DrawerFormAccountUpdate from '../components/DrawerFormAccountUpdate';
 
 const { Title } = Typography;
 
@@ -19,6 +20,7 @@ const Accounts: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false);
   const [accountDetail, setAccountDetail] = useState(false);
   const [accounts, setAccountsState] = useState<Account[]>([])
+  const [accountId, setAccountIdState] = useState<string | undefined>()
 
   useEffect(
     () => {
@@ -41,22 +43,28 @@ const Accounts: NextPage<Props> = () => {
   const handleState = () => {
     setAccountDetail(true);
     setVisible(!visible);
+    setAccountIdState(undefined)
   };
+
+  const handleAccountDetail = (key: string) => {
+    setAccountDetail(true)
+    setVisible(!visible)
+    setAccountIdState(key)
+  }
 
   const showDrawerForm = () => {
     setAccountDetail(false);
     setVisible(!visible);
   };
 
-  const handleEdit = (key: React.Key) => {
+  const handleEdit = (key: string) => {
     setAccountDetail(false);
     setVisible(!visible);
-    console.log('edit' + key);
+    setAccountIdState(key)
   };
 
   const handleDelete = (key: React.Key) => {
     const data = [...dataSource];
-    /* this.setState({ dataSource: data.filter(item => item.key !== key) }); */
     const handleAccountDelete = async () => {
       let res = await fetch(`http://localhost:3000/api/account/${key}`, {
         method: 'DELETE',
@@ -73,7 +81,11 @@ const Accounts: NextPage<Props> = () => {
     {
       title: 'Name',
       dataIndex: 'name',
-      key: 'name'
+      key: 'name',
+      render: (text: string, record: { key: string, }) =>
+        <Popconfirm title="Sure to show?" onConfirm={() => handleAccountDetail(record.key)}>
+          {text}
+        </Popconfirm>
     },
     {
       title: 'Client',
@@ -99,7 +111,7 @@ const Accounts: NextPage<Props> = () => {
       title: () => <EditOutlined />,
       dataIndex: 'edit',
       key: 'edit',
-      render: (_: any, record: { key: React.Key }) =>
+      render: (_: any, record: { key: string }) =>
         /*  dataSource.length >= 1 ? ( */
         <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
           <EditOutlined />
@@ -120,18 +132,12 @@ const Accounts: NextPage<Props> = () => {
         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
           <DeleteOutlined />
         </Popconfirm>
-      /*   ) : null, */  /* render: () => (
-        <Button onClick={handleDelete} type="text">
-          <DeleteOutlined />
-        </Button>
-      ), */
-
     },
   ];
 
   return (
     <Layout title="account" description="account">
-      <Title level={3}>ACCOUNT</Title>
+      <Title level={3}>ACCOUNTS</Title>
       <Divider />
       <div>
         <Table
@@ -160,8 +166,9 @@ const Accounts: NextPage<Props> = () => {
           </Space>
         }
       >
-        {!accountDetail && <DrawerFormAccount />}
-        {accountDetail && <DrawerDetailAccount />}
+        {accountDetail && accountId && <DrawerDetailAccount id={accountId}/>}
+        {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId}/>}
+        {!accountDetail && !accountId && <DrawerFormAccount />}
       </Drawer>
     </Layout>
   );

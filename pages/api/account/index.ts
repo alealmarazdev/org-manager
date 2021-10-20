@@ -20,7 +20,6 @@ export default async function handler(
   } = req;
 
   const accountRepository = getMongoRepository(Account);
-  /* const data = await accountRepository.find(); */
 
   switch (method) {
     case 'GET':

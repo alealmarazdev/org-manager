@@ -8,6 +8,7 @@ import DrawerDetailUser from '../components/DrawerDetailUser/DrawerDetailUser';
 
 import { NextPage } from 'next';
 import User from '../entity/User';
+import DrawerFormUpdate from '../components/DrawerFormUpdated';
 
 const { Title } = Typography;
 
@@ -19,6 +20,7 @@ const Users: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false)
   const [userDetail, setUserDetail] = useState(false)
   const [users, setUsersState] = useState<User[]>([])
+  const [userId, setUserIdState] = useState<string | undefined>()
 
   useEffect(
     () => {
@@ -38,11 +40,16 @@ const Users: NextPage<Props> = () => {
 
   const dataSource = users.map((user) => ({ ...user, key: user.id.toString() }))
 
-  const handleState = (/* key: React.Key */) => {
+  const handleState = () => {
     setUserDetail(true)
     setVisible(!visible)
-    console.log(userDetail)
-   /*  console.log('state' + key); */
+    setUserIdState(undefined)
+  }
+
+  const handleUserDetail = (key: string) => {
+    setUserDetail(true)
+    setVisible(!visible)
+    setUserIdState(key)
   }
 
   const showDrawerForm = () => {
@@ -50,15 +57,13 @@ const Users: NextPage<Props> = () => {
     setVisible(!visible)
   };
 
-  const handleEdit = (key: React.Key) => {
+  const handleEdit = (key: string) => {
     setUserDetail(false);
     setVisible(!visible);
-    console.log('edit' + key);
+    setUserIdState(key)
   };
 
   const handleDelete = (key: React.Key) => {
-    const data = [...dataSource];
-    /* this.setState({ dataSource: data.filter(item => item.key !== key) }); */
     const handleUserDelete = async () => {
       let res = await fetch(`http://localhost:3000/api/user/${key}`, {
         method: 'DELETE',
@@ -71,18 +76,15 @@ const Users: NextPage<Props> = () => {
     handleUserDelete()
   };
 
-
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text: string) => <Button onClick={handleState} type="link">{text}</Button>,
-     /*  render: (_: any, text: string, record: { key: React.Key }) =>
-      <Popconfirm title="Sure to edit?" onConfirm={() => handleState(record.key)}>
-        {text}
-      </Popconfirm> */
-      
+      render: (text: string, record: { key: string, }) =>
+        <Popconfirm title="Sure to show?" onConfirm={() => handleUserDetail(record.key)}>
+          {text}
+        </Popconfirm>
     },
     {
       title: 'Email',
@@ -98,7 +100,7 @@ const Users: NextPage<Props> = () => {
       title: () => <EditOutlined />,
       dataIndex: 'edit',
       key: 'edit',
-      render: (_: any, record: { key: React.Key }) =>
+      render: (_: any, record: { key: string }) =>
         <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
           <EditOutlined />
         </Popconfirm>
@@ -145,11 +147,9 @@ const Users: NextPage<Props> = () => {
           </Space>
         }
       >
-        {
-          userDetail && <DrawerDetailUser />
-        }
-        {!userDetail && <DrawerForm />
-        }
+        {userDetail && userId && <DrawerDetailUser id={userId} />}
+        {!userDetail && userId && <DrawerFormUpdate id={userId} />}
+        {!userDetail && !userId && <DrawerForm />}
       </Drawer>
     </Layout>
   );

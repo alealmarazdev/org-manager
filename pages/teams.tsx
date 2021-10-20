@@ -7,6 +7,7 @@ import { NextPage } from 'next';
 import Team from '../entity/Team';
 import DrawerFormTeam from '../components/DrawerFormTeam';
 import DrawerDetailTeam from '../components/DrawerDetailTeam';
+import DrawerFormTeamUpdate from '../components/DrawerFormTeamUpdate';
 
 const { Title } = Typography;
 
@@ -18,6 +19,7 @@ const Teams: NextPage<Props> = () => {
   const [visible, setVisible] = useState(false)
   const [teamDetail, setTeamDetail] = useState(false)
   const [teams, setTeamsState] = useState<Team[]>([])
+  const [teamId, setTeamIdState] = useState<string | undefined>()
 
   useEffect(
     () => {
@@ -40,21 +42,28 @@ const Teams: NextPage<Props> = () => {
   const handleState = () => {
     setTeamDetail(true)
     setVisible(!visible)
+    setTeamIdState(undefined)
+  }
+
+  const handleAccountDetail = (key: string) => {
+    setTeamDetail(true)
+    setVisible(!visible)
+    setTeamIdState(key)
   }
 
   const showDrawerForm = () => {
     setTeamDetail(false)
     setVisible(!visible)
   };
-  const handleEdit = (key: React.Key) => {
+
+  const handleEdit = (key: string) => {
     setTeamDetail(false)
     setVisible(!visible)
-    console.log('edit' + key)
+    setTeamIdState(key)
   }
 
   const handleDelete = (key: React.Key) => {
     const data = [...dataSource];
-    /* this.setState({ dataSource: data.filter(item => item.key !== key) }); */
     const handleTeamDelete = async () => {
       let res = await fetch(`http://localhost:3000/api/team/${key}`, {
         method: 'DELETE',
@@ -84,7 +93,7 @@ const Teams: NextPage<Props> = () => {
       title: () => <EditOutlined />,
       dataIndex: 'edit',
       key: 'edit',
-      render: (_: any, record: { key: React.Key }) =>
+      render: (_: any, record: { key: string }) =>
         <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
           <EditOutlined />
         </Popconfirm>
@@ -132,11 +141,9 @@ const Teams: NextPage<Props> = () => {
           </Space>
         }
       >
-        {
-          teamDetail && <DrawerDetailTeam />
-        }
-        {!teamDetail && <DrawerFormTeam />
-        }
+        {teamDetail && teamId && <DrawerDetailTeam id={teamId} />}
+        {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId}/>}
+        {!teamDetail && !teamId && <DrawerFormTeam />}
       </Drawer>
     </Layout>
   );

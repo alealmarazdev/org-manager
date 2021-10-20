@@ -33,7 +33,7 @@ type Props = {
 const DrawerFormTeam: FC<Props> = () => {
 
   const onFinish = (values: any) => {
-    const handleAccountCreated = async () => {
+    const handleTeamCreated = async () => {
       let res = await fetch('http://localhost:3000/api/team', {
         method: 'POST',
         body: JSON.stringify(values)
@@ -42,8 +42,8 @@ const DrawerFormTeam: FC<Props> = () => {
       const response = await res.json()
       console.log(response)
     }
-    handleAccountCreated()
-    console.log(values);
+    handleTeamCreated()
+  
   }
 
 

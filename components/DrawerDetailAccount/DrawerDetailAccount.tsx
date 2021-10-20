@@ -1,44 +1,50 @@
 import { Button, Col, Divider, Drawer, Row, Space, Typography } from "antd"
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
+import Account from "../../entity/Account";
 import DescriptionItem from "../DescriptionItem/DescriptionItem";
 
 const { Title } = Typography;
 
 type Props = {
-
+    id: string | undefined
 }
 
-const DrawerDetailAccount: FC<Props> = () => {
-    
-    return (
+const DrawerDetailAccount: FC<Props> = ({ id }) => {
+    const [account, setAccountState] = useState<Account>({})
 
+    useEffect(
+        () => {
+            const handleAccount = async () => {
+                let res = await fetch(`http://localhost:3000/api/account/${id}`);
+                const response = await res.json();
+
+                if (!response) {
+                    return {
+                        notFound: true,
+                    };
+                }
+
+                return setAccountState(response.data)
+            }
+            handleAccount()
+        }, [])
+    console.log('=====>', account)
+    return (
         <>
             <Row>
                 <Col span={24}>
-                    <DescriptionItem title="Full Name" content="Lily Potter" />
+                    <DescriptionItem title="Account Name" content={account.name} />
                 </Col>
                 <Divider />
                 <Col span={24}>
-                    <DescriptionItem title="Email" content="email1@example.com" />
+                    <DescriptionItem title="Client" content={account.client} />
                 </Col>
                 <Divider />
                 <Col span={24}>
-                    <DescriptionItem title="English level" content="Middle" />
+                    <DescriptionItem title="Responsable" content={account.responsable} />
                 </Col>
                 <Divider />
-                <Col span={24}>
-                    <DescriptionItem title="Resume Link" content="China🇨🇳" />
-                </Col>
             </Row>
-            <Divider />
-            <Row>
-                <Col span={24}>
-                    <DescriptionItem
-                        title="Skills"
-                        content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc." />
-                </Col>
-            </Row>
-            <Divider />
         </>
 
     );

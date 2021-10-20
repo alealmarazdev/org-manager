@@ -16,26 +16,47 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 type Props = {
-  
+  id: string | undefined
 }
 
-const DrawerForm: FC<Props> = () => {
+const DrawerFormUpdate: FC<Props> = ({ id }) => {
+  const [user, setUserState] = useState<User>({})
+  const [form] = Form.useForm()
+
+  useEffect(
+    () => {
+      const handleUser = async () => {
+        let res = await fetch(`http://localhost:3000/api/user/${id}`);
+        const response = await res.json();
+
+        if (!response) {
+          return {
+            notFound: true,
+          };
+        }
+        form.setFieldsValue(response.data)
+        /*setUserState(response.data);*/
+        return
+      }
+      handleUser()
+
+    }, [])
 
   const onFinish = (values: any) => {
-    const handleUser = async () => {
-      let res = await fetch('http://localhost:3000/api/user', {
-        method: 'POST',
+    
+    const handleUserUpdate = async () => {
+      let res = await fetch(`http://localhost:3000/api/user/${id}`, {
+        method: 'PUT',
         body: JSON.stringify(values)
       })
 
       const response = await res.json()
       console.log(response)
     }
-    handleUser()
+    handleUserUpdate()  /*  */
   }
 
-  /*
- {
+  /* {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -49,7 +70,7 @@ const DrawerForm: FC<Props> = () => {
 
   return (
 
-    <Form layout="vertical"  hideRequiredMark onFinish={onFinish}>
+    <Form layout="vertical" form={form} hideRequiredMark onFinish={onFinish}>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item
@@ -59,6 +80,7 @@ const DrawerForm: FC<Props> = () => {
           >
             <Input placeholder="Please enter user name" />
           </Form.Item>
+          <span>{user.name}</span>
         </Col>
         <Col span={12}>
           <Form.Item
@@ -88,7 +110,7 @@ const DrawerForm: FC<Props> = () => {
             </Select>
           </Form.Item>
         </Col>
-       <Col span={12}>
+        <Col span={12}>
           <Form.Item
             name="dateTime"
             label="DateTime"
@@ -164,4 +186,4 @@ const DrawerForm: FC<Props> = () => {
   );
 };
 
-export default DrawerForm
+export default DrawerFormUpdate

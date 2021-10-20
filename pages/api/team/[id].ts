@@ -25,20 +25,22 @@ export default async function handler(
   switch (method) {
     case 'GET':
       // Get data from your database
-      res.status(200).json({ data: id });
-      break;
+      if (!team) {
+        return res.status(404).json({ data: 'no found' });
+      }
+
+      return res.status(200).json({ data: team });
     case 'PUT':
       // Update data in your database
-      if (team) {
-        for (const key of Object.keys(body as Partial<Team>)) {
-          //@ts-ignore
-          team[key] = body[key];
-        }
-        await teamRepository.update(id, team!);
-        return res.status(200).json({ data: team });
+      if (!team) {
+        return res.status(404).json({ data: 'Not found' });
       }
-      res.status(404).json({ data: 'no found' });
-      break;
+      const content = JSON.parse(body)
+      const updatedTeam = Object.assign({}, team, content)
+
+      await teamRepository.update(id, updatedTeam);
+      return res.status(200).json({ data: updatedTeam });
+
     case 'DELETE':
       // Delete data in your database
       await teamRepository.delete(id);
