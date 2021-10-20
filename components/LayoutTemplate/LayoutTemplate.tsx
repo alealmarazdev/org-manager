@@ -4,13 +4,18 @@ import NextLink from 'next/link';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import logo from '../../public/images/ArkusNexus500.png';
 import data from '../../utils/data';
+import User from '../../entity/User';
 const { Header, Content, Footer } = Layout;
 const { Item } = Menu;
 
-type Props = { title: string; description: string };
+type Props = { 
+  title: string;
+   description: string, 
+   user?: User 
+  };
 
-const LayoutTemplate: FC<Props> = ({ title, description, children }) => {
-  const user = true;
+const LayoutTemplate: FC<Props> = ({ title, description, children, user }) => {
+
   return (
     <>
       <Head>
