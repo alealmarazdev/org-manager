@@ -37,7 +37,7 @@ const DrawerDetailTeam: FC<Props> =({ id }) => {
         }
         handleTeam()
     }, [])
-    console.log('=====>', team)
+
     return (
       
           <>

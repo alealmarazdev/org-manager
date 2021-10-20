@@ -4,15 +4,6 @@ import { Form, Input, InputNumber, Button, Typography, Drawer, Space, Row, Col, 
 
 const { Option } = Select;
 
-/* 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-}; */
 /* eslint-disable no-template-curly-in-string */
 
 const validateMessages = {
@@ -35,7 +26,6 @@ const DrawerFormTeam: FC<Props> = () => {
   const onFinish = (values: any) => {
     const handleTeamCreated = async () => {
       let res = await fetch('http://localhost:3000/api/team', {
-        //header application JSON
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

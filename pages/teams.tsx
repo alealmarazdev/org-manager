@@ -133,15 +133,6 @@ const Teams: NextPage<Props> = () => {
         onClose={handleState}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
-        /* @ts-ignore */
-        /* extra={
-          <Space>
-            <Button onClick={handleState}>Cancel</Button>
-            <Button onClick={handleState} type="primary">
-              Submit
-            </Button>
-          </Space>
-        } */
       >
         {teamDetail && teamId && <DrawerDetailTeam id={teamId} />}
         {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId} onSubmit={handleState}/>}

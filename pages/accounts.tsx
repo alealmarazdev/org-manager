@@ -115,23 +115,15 @@ const Accounts: NextPage<Props> = () => {
       dataIndex: 'edit',
       key: 'edit',
       render: (_: any, record: { key: string }) =>
-        /*  dataSource.length >= 1 ? ( */
         <Popconfirm title="Sure to edit?" onConfirm={() => handleEdit(record.key)}>
           <EditOutlined />
         </Popconfirm>
-      /* ) : null, */
-      /* render: () => (
-        <Button onClick={handleEdit} type="text">
-          <EditOutlined />
-        </Button>
-      ), */
     },
     {
       title: () => <DeleteOutlined />,
       dataIndex: 'delete',
       key: 'delete',
       render: (_: any, record: { key: React.Key }) =>
-        /*   dataSource.length >= 1 ? ( */
         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
           <DeleteOutlined />
         </Popconfirm>
@@ -159,15 +151,6 @@ const Accounts: NextPage<Props> = () => {
         onClose={handleState}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
-        /* @ts-ignore */
-        /* extra={
-          <Space>
-            <Button onClick={handleState}>Cancel</Button>
-            <Button onClick={handleState} type="primary">
-              Submit
-            </Button>
-          </Space>
-        } */
       >
         {accountDetail && accountId && <DrawerDetailAccount id={accountId} />}
         {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId} onSubmit={handleState}/>}

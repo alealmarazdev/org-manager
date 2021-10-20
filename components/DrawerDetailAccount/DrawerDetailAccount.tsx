@@ -28,7 +28,7 @@ const DrawerDetailAccount: FC<Props> = ({ id }) => {
             }
             handleAccount()
         }, [])
-    console.log('=====>', account)
+
     return (
         <>
             <Row>

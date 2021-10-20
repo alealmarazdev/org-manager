@@ -31,15 +31,12 @@ export default async function handler(
 
     case 'POST':
       // Create data in your database
-      console.log('.....', body)
       const account = await accountRepository.findOne(body.accountId as string)
-      console.log('--->>>>', account)
       if(!account) {
          res.status(400).json({ data: 'Not account id found' })
          return
       }
 
-   /*    const content = JSON.parse(body) */
       const newTeam = new Team(body);
       await teamRepository.save(newTeam);
 

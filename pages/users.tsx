@@ -139,15 +139,6 @@ const Users: NextPage<Props> = () => {
         onClose={handleState}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
-      /* @ts-ignore */
-      /*   extra={
-          <Space>
-            <Button onClick={handleState}>Cancel</Button>
-            <Button onClick={handleState} type="primary">
-              Submit
-            </Button>
-          </Space>
-        } */
       >
         {userDetail && userId && <DrawerDetailUser id={userId} />}
         {!userDetail && userId && <DrawerFormUpdate id={userId} onSubmit={handleState} />}

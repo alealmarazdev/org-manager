@@ -23,7 +23,6 @@ type Props = {
 const DrawerFormAccountUpdate: FC<Props> = ({ id, onSubmit }) => {
   const [account, setAccountState] = useState<Account>({})
   const [form] = Form.useForm()
-  console.log('====>', id)
 
   useEffect(
     () => {
@@ -37,8 +36,6 @@ const DrawerFormAccountUpdate: FC<Props> = ({ id, onSubmit }) => {
           };
         }
         form.setFieldsValue(response.data)
-        console.log('----->', response.data )
-        /*setAccountState(response.data);*/
         return
       }
       handleAccount()
@@ -60,7 +57,7 @@ const DrawerFormAccountUpdate: FC<Props> = ({ id, onSubmit }) => {
       console.log(response)
       onSubmit() 
     }
-    handleAccountUpdate()  /*  */
+    handleAccountUpdate()
   }
 
   return (

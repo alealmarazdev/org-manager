@@ -23,7 +23,6 @@ type Props = {
 const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
   const [team, setTeamState] = useState<Team>({})
   const [form] = Form.useForm()
-  console.log('====>', id)
 
   useEffect(
     () => {
@@ -37,8 +36,6 @@ const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
           };
         }
         form.setFieldsValue(response.data)
-        console.log('----->', response.data )
-        /*setAccountState(response.data);*/
         return
       }
       handleTeam()
@@ -60,7 +57,7 @@ const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
       console.log(response)
       onSubmit() 
     }
-    handleTeamUpdate()  /*  */
+    handleTeamUpdate() 
   }
 
   return (

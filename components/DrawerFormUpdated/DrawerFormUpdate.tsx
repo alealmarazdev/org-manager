@@ -36,7 +36,6 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
           };
         }
         form.setFieldsValue(response.data)
-        /*setUserState(response.data);*/
         return
       }
       handleUser()
@@ -61,18 +60,6 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
     handleUserUpdate()
   }
 
-  /* {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ hungry: true })
-  }).then( r => {
-    open(r.headers.get('location'));
-    return r.json(); {user?.name}
-  }) */
-
-
   return (
 
     <Form layout="vertical" form={form} hideRequiredMark onFinish={onFinish}>
@@ -95,14 +82,14 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
           >
             <Input
               style={{ width: '100%' }}
-            /* addonBefore="http://"
-            addonAfter=".com" */
-            /*placeholder="Please enter email"*/
+            placeholder="Please enter email"
             />
           </Form.Item>
         </Col>
       </Row>
-      {/*  < Row gutter={16}>
+      {/* 
+       TODO: Add start date and finish date to be a user in a team
+       < Row gutter={16}>
         <Col span={12}>
           <Form.Item
             name="account"
@@ -152,8 +139,7 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
             <Input
               style={{ width: '100%' }}
               addonBefore="https://docs.google.com/document/"
-            /* addonAfter=".com" */
-            /*  placeholder="Please enter email"*/
+              placeholder="Please enter resume link"
             />
           </Form.Item>
         </Col>
