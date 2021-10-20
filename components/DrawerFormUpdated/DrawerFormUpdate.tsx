@@ -17,7 +17,7 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 type Props = {
   id: string | undefined;
-  onSubmit: ()=>void;
+  onSubmit: () => void;
 }
 
 const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
@@ -43,7 +43,7 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
     }, [])
 
   const onFinish = (values: any) => {
-    
+
     const handleUserUpdate = async () => {
       let res = await fetch(`http://localhost:3000/api/user/${id}`, {
         method: 'PUT',
@@ -54,8 +54,8 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
       })
 
       const response = await res.json()
-      console.log(response) 
-      onSubmit() 
+      console.log(response)
+      onSubmit()
     }
     handleUserUpdate()
   }
@@ -82,7 +82,7 @@ const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
           >
             <Input
               style={{ width: '100%' }}
-            placeholder="Please enter email"
+              placeholder="Please enter email"
             />
           </Form.Item>
         </Col>

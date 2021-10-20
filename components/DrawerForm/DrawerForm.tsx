@@ -58,7 +58,7 @@ const DrawerForm: FC<Props> = () => {
           >
             <Input
               style={{ width: '100%' }}
-            placeholder="Please enter email"
+              placeholder="Please enter email"
             />
           </Form.Item>
         </Col>
@@ -115,7 +115,7 @@ const DrawerForm: FC<Props> = () => {
             <Input
               style={{ width: '100%' }}
               addonBefore="https://docs.google.com/document/"
-             placeholder="Please enter a resume link"
+              placeholder="Please enter a resume link"
             />
           </Form.Item>
         </Col>

@@ -30,7 +30,7 @@ export default async function handler(
       }
 
       return res.status(200).json({ data: account });
-      
+
     case 'PUT':
       // Update or create data in your database
       if (!account) {

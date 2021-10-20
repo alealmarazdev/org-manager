@@ -42,7 +42,7 @@ const Home: NextPage<Props> = () => {
 
   if (userSelected) {
     return (
-      <LayoutTemplate title="arkus nexus" description="Organization Manager" user={userSelected}> 
+      <LayoutTemplate title="arkus nexus" description="Organization Manager" user={userSelected}>
         <Profile user={userSelected} />
       </LayoutTemplate>
     );

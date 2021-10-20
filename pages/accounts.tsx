@@ -153,7 +153,7 @@ const Accounts: NextPage<Props> = () => {
         bodyStyle={{ paddingBottom: 80 }}
       >
         {accountDetail && accountId && <DrawerDetailAccount id={accountId} />}
-        {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId} onSubmit={handleState}/>}
+        {!accountDetail && accountId && <DrawerFormAccountUpdate id={accountId} onSubmit={handleState} />}
         {!accountDetail && !accountId && <DrawerFormAccount />}
       </Drawer>
     </Layout>

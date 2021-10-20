@@ -20,7 +20,7 @@ const Teams: NextPage<Props> = () => {
   const [teamDetail, setTeamDetail] = useState(false)
   const [teams, setTeamsState] = useState<Team[]>([])
   const [teamId, setTeamIdState] = useState<string | undefined>()
-  
+
   const handleTeam = async () => {
     let res = await fetch('http://localhost:3000/api/team');
     const response = await res.json();
@@ -135,7 +135,7 @@ const Teams: NextPage<Props> = () => {
         bodyStyle={{ paddingBottom: 80 }}
       >
         {teamDetail && teamId && <DrawerDetailTeam id={teamId} />}
-        {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId} onSubmit={handleState}/>}
+        {!teamDetail && teamId && <DrawerFormTeamUpdate id={teamId} onSubmit={handleState} />}
         {!teamDetail && !teamId && <DrawerFormTeam />}
       </Drawer>
     </Layout>

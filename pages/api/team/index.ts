@@ -32,16 +32,16 @@ export default async function handler(
     case 'POST':
       // Create data in your database
       const account = await accountRepository.findOne(body.accountId as string)
-      if(!account) {
-         res.status(400).json({ data: 'Not account id found' })
-         return
+      if (!account) {
+        res.status(400).json({ data: 'Not account id found' })
+        return
       }
 
       const newTeam = new Team(body);
       await teamRepository.save(newTeam);
 
-     const teamsIds = account.teams.map((team) => team._id)
-      account.teams= [...account.teams, newTeam]
+      const teamsIds = account.teams.map((team) => team._id)
+      account.teams = [...account.teams, newTeam]
       await accountRepository.update(body.accountId, account)
 
       res.status(200).json({ data: newTeam });

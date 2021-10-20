@@ -16,9 +16,9 @@ export default class Account {
   responsable!: string;
 
   @Column((type) => Team)
-  teams!: Team[]; 
+  teams!: Team[];
 
-  constructor(params: { name: string; client: string; responsable: string;}) {
+  constructor(params: { name: string; client: string; responsable: string; }) {
     Object.assign(this, params);
   }
 }

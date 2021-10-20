@@ -17,7 +17,7 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 type Props = {
   id: string | undefined;
-  onSubmit: ()=>void;
+  onSubmit: () => void;
 }
 
 const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
@@ -43,7 +43,7 @@ const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
     }, [])
 
   const onFinish = (values: any) => {
-    
+
     const handleTeamUpdate = async () => {
       let res = await fetch(`http://localhost:3000/api/team/${id}`, {
         method: 'PUT',
@@ -55,9 +55,9 @@ const DrawerFormTeamUpdate: FC<Props> = ({ id, onSubmit }) => {
 
       const response = await res.json()
       console.log(response)
-      onSubmit() 
+      onSubmit()
     }
-    handleTeamUpdate() 
+    handleTeamUpdate()
   }
 
   return (

@@ -8,11 +8,11 @@ import User from '../../entity/User';
 const { Header, Content, Footer } = Layout;
 const { Item } = Menu;
 
-type Props = { 
+type Props = {
   title: string;
-   description: string, 
-   user?: User 
-  };
+  description: string,
+  user?: User
+};
 
 const LayoutTemplate: FC<Props> = ({ title, description, children, user }) => {
 

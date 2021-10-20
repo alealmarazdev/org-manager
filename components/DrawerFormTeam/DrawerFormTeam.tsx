@@ -37,7 +37,7 @@ const DrawerFormTeam: FC<Props> = () => {
       console.log(response)
     }
     handleTeamCreated()
-  
+
   }
 
 

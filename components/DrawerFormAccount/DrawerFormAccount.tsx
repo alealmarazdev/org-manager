@@ -21,7 +21,7 @@ type Props = {
 
 }
 
-const DrawerFormAccount: FC<Props> =() => {
+const DrawerFormAccount: FC<Props> = () => {
 
   const onFinish = (values: any) => {
     const handleAccountCreated = async () => {
@@ -66,7 +66,7 @@ const DrawerFormAccount: FC<Props> =() => {
         </Col>
       </Row>
       <Row gutter={16}>
-      <Col span={12}>
+        <Col span={12}>
           <Form.Item
             name="responsable"
             label="Responsable name"
