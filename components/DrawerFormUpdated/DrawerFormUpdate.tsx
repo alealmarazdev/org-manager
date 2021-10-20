@@ -16,10 +16,11 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 type Props = {
-  id: string | undefined
+  id: string | undefined;
+  onSubmit: ()=>void;
 }
 
-const DrawerFormUpdate: FC<Props> = ({ id }) => {
+const DrawerFormUpdate: FC<Props> = ({ id, onSubmit }) => {
   const [user, setUserState] = useState<User>({})
   const [form] = Form.useForm()
 
@@ -51,9 +52,10 @@ const DrawerFormUpdate: FC<Props> = ({ id }) => {
       })
 
       const response = await res.json()
-      console.log(response)
+      console.log(response) 
+      onSubmit() 
     }
-    handleUserUpdate()  /*  */
+    handleUserUpdate()
   }
 
   /* {

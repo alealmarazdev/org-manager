@@ -22,19 +22,19 @@ const Users: NextPage<Props> = () => {
   const [users, setUsersState] = useState<User[]>([])
   const [userId, setUserIdState] = useState<string | undefined>()
 
+  const handleUser = async () => {
+    let res = await fetch('http://localhost:3000/api/user');
+    const response = await res.json();
+
+    if (!response) {
+      return {
+        notFound: true,
+      };
+    }
+    return setUsersState(response.data);
+  }
   useEffect(
     () => {
-      const handleUser = async () => {
-        let res = await fetch('http://localhost:3000/api/user');
-        const response = await res.json();
-
-        if (!response) {
-          return {
-            notFound: true,
-          };
-        }
-        return setUsersState(response.data);
-      }
       handleUser()
     }, [])
 
@@ -44,6 +44,7 @@ const Users: NextPage<Props> = () => {
     setUserDetail(true)
     setVisible(!visible)
     setUserIdState(undefined)
+    handleUser()
   }
 
   const handleUserDetail = (key: string) => {
@@ -137,18 +138,18 @@ const Users: NextPage<Props> = () => {
         onClose={handleState}
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
-        /* @ts-ignore */
-        extra={
+      /* @ts-ignore */
+      /*   extra={
           <Space>
             <Button onClick={handleState}>Cancel</Button>
             <Button onClick={handleState} type="primary">
               Submit
             </Button>
           </Space>
-        }
+        } */
       >
         {userDetail && userId && <DrawerDetailUser id={userId} />}
-        {!userDetail && userId && <DrawerFormUpdate id={userId} />}
+        {!userDetail && userId && <DrawerFormUpdate id={userId} onSubmit={handleState} />}
         {!userDetail && !userId && <DrawerForm />}
       </Drawer>
     </Layout>
